@@ -1,0 +1,48 @@
+{%load static%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{%static 'css/static.css'%}">
+    <title>Document</title>
+</head>
+<body>
+    <main>
+
+        <header>
+            <nav>
+                <div class="logo-text">
+                    <h1 id="header-text">MY TO-DO LIST</h>
+                </div>
+                <div class="logo">
+                    <img src="{% static 'images/download.png' %}" alt="my image" id="header-image">
+                </div>
+            </nav>
+        </header>
+
+        <div class="container">
+            <div class="form">
+                <form action="/addTodoItem/" method = "post">{% csrf_token %}
+                    <input type="text" name="content">
+                    <input type="submit" value="Add Todo Item">
+                </form>
+            </div>
+        </div>
+        <div class="container">
+            <ul>
+                {%for i in all_items%}
+                <li class="list-content">
+                    {{i.content}}
+                    <form action="/deleteTodoItem/{{i.id}}/" method = "post">
+                        {% csrf_token %}
+                        <input type="submit" value="Delete">
+                    </form>  
+                </li>
+                {%endfor%}
+            </ul>
+        </div>
+    </main>
+</body>
+</html>
